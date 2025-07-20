@@ -21,6 +21,15 @@ class AdminBinhLuan
         }
     }
 
+    public function getLatest($limit = 5)
+    {
+        $sql = "SELECT * FROM comment ORDER BY ngay_dang DESC LIMIT :limit";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Xóa bình luận
     public function deleteBinhLuan($id)
     {
